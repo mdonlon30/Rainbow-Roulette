@@ -202,6 +202,13 @@ profitElement.addEventListener("click", function () {
   // Alert the player to the profit they made
   alert("You won: $" + profit);
 
+  // Create an audio element and set the source to the sound file
+  const winElement = document.createElement("audio");
+  winElement.src = "./sound/win.mp3";
+
+  // Play the sound effect
+  winElement.play();
+
   // Reset the game state
   currentBet = 0;
   currentBetElement.innerHTML = 0;
