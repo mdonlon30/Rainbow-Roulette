@@ -86,11 +86,10 @@ placeBetElement.addEventListener("click", function () {
   gunElement.style.transform = "rotate(" + currentRotation + "deg)";
 
   // Create an audio element and set the source to the sound file
-  const loadElement = document.createElement("audio");
-  loadElement.src = "./sound/loading.mp3";
+  const loadSound = document.getElementById("load-sound");
 
   // Play the sound effect
-  loadElement.play();
+  loadSound.play();
 });
 
 
@@ -101,9 +100,22 @@ fireElement.addEventListener("click", function () {
   // Update the chambers element
   chambersElement.innerHTML = remainingChambers;
 
+  // Add the flip class to the element
+  chambersElement.classList.add("flip");
+
+  // Remove the flip class after the animation is finished
+  setTimeout(() => {
+    chambersElement.classList.remove("flip");
+  }, 500); // 500ms is the duration of the flip animation
+
   // Check if the player survived this shot
   if (remainingChambers === bulletChamber) {
 
+    // Create an audio element and set the source to the sound file
+    const loseSound = document.getElementById("lose-sound");
+
+    // Play the sound effect
+    loseSound.play();
 
     // Create the flash element and add it to the page
     const flashElement = document.createElement("div");
@@ -138,6 +150,36 @@ fireElement.addEventListener("click", function () {
     chambersElement.innerHTML = 6;
     bettingSectionElement.style.display = "flex";
     bigElement.style.display = "none";
+  } else if (remainingChambers === 1) {  // Check if the player won the game
+
+    // Increase the current bet by the corresponding percentage
+    currentBet *= winnings[winnings.length - remainingChambers - 1];
+
+    // Update the current bet element
+    currentBetElement.innerHTML = currentBet;
+    
+    // Calculate the profit
+    const profit = currentBet - originalBet;
+
+    // Create an audio element and set the source to the sound file
+    const winSound = document.getElementById("win-sound");
+
+    // Play the sound effect
+    winSound.play();
+
+    alert("You won Russian Roulette! You won: $" + profit);
+
+    // Add the winnings to the available funds and update the funds element
+    funds += currentBet;
+    fundsElement.innerHTML = funds;
+
+    // Reset the game state
+    currentBet = 0;
+    currentBetElement.innerHTML = 0;
+    remainingChambers = 6;
+    chambersElement.innerHTML = 6;
+    bettingSectionElement.style.display = "flex";
+    bigElement.style.display = "none";
   } else {
     // Increase the current bet by the corresponding percentage
     currentBet *= winnings[winnings.length - remainingChambers - 1];
@@ -155,40 +197,15 @@ fireElement.addEventListener("click", function () {
     gunElement.style.transform = "rotate(" + currentRotation + "deg)";
 
     // Create an audio element and set the source to the sound file
-    const shotElement = document.createElement("audio");
-    shotElement.src = "./sound/Shot.mp3";
+    const fireSound = document.getElementById("fire-sound");
+
+    // Reset the audio file to the start
+    fireSound.currentTime = 0;
 
     // Play the sound effect
-    shotElement.play();
+    fireSound.play();
 
-    // Check if the player won the game
-    if (remainingChambers === 1) {
-      // Calculate the profit
-      const profit = currentBet - originalBet;
-
-      // Create an audio element and set the source to the sound file
-      const winElement = document.createElement("audio");
-      winElement.src = "./sound/win.mp3";
-
-      // Play the sound effect
-      winElement.play();
-
-      alert("You won Russian Roulette! You won: $" + profit);
-
-      // Add the winnings to the available funds and update the funds element
-      funds += currentBet;
-      fundsElement.innerHTML = funds;
-
-      // Reset the game state
-      currentBet = 0;
-      currentBetElement.innerHTML = 0;
-      remainingChambers = 6;
-      chambersElement.innerHTML = 6;
-      bettingSectionElement.style.display = "flex";
-      bigElement.style.display = "none";
-    }
   }
-
 });
 
 profitElement.addEventListener("click", function () {
@@ -199,15 +216,16 @@ profitElement.addEventListener("click", function () {
   // Calculate the profit
   const profit = currentBet - originalBet;
 
+  // Create an audio element and set the source to the sound file
+  const winSound = document.getElementById("win-sound");
+
+  // Play the sound effect
+  winSound.play();
+
   // Alert the player to the profit they made
   alert("You won: $" + profit);
 
-  // Create an audio element and set the source to the sound file
-  const winElement = document.createElement("audio");
-  winElement.src = "./sound/win.mp3";
 
-  // Play the sound effect
-  winElement.play();
 
   // Reset the game state
   currentBet = 0;
