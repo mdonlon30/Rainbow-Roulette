@@ -80,10 +80,17 @@ placeBetElement.addEventListener("click", function () {
   currentRotation += 720;
 
   // Set the transition duration and timing function for the place-bet button
-  gunElement.style.transition = "transform 2s ease-in-out";
+  gunElement.style.transition = "transform 1s ease-out";
 
   // Rotate the gun by the current rotation
   gunElement.style.transform = "rotate(" + currentRotation + "deg)";
+
+  // Create an audio element and set the source to the sound file
+  const loadElement = document.createElement("audio");
+  loadElement.src = "./sound/loading.mp3";
+
+  // Play the sound effect
+  loadElement.play();
 });
 
 
@@ -96,12 +103,34 @@ fireElement.addEventListener("click", function () {
 
   // Check if the player survived this shot
   if (remainingChambers === bulletChamber) {
-    
-    alert("You were shot! Try Again.");
-    // Apply the fade-in animation
-    document.body.classList.add("fade-in");
-    // Remove the fade-in animation
-    document.body.classList.remove("fade-in");
+
+
+    // Create the flash element and add it to the page
+    const flashElement = document.createElement("div");
+    flashElement.style.position = "absolute";
+    flashElement.style.top = 0;
+    flashElement.style.left = 0;
+    flashElement.style.width = "100%";
+    flashElement.style.height = "100%";
+    flashElement.style.backgroundColor = "white";
+    flashElement.style.zIndex = 10;
+    document.body.appendChild(flashElement);
+
+    // Apply the fade-in class to the flash element
+    flashElement.classList.add("fade-in");
+
+
+
+    // Wait for the fade-in animation to finish before showing the alert
+    setTimeout(() => {
+      alert("You were shot! Try Again.");
+    }, 1000); // 1000ms is the duration of the fade-in animation
+
+    // Remove the flash element from the page after the alert is shown
+    setTimeout(() => {
+      document.body.removeChild(flashElement);
+    }, 2000); // 2000ms is the duration of the fade-in animation plus the time it takes for the alert to be shown
+
     // Reset the game state
     currentBet = 0;
     currentBetElement.innerHTML = 0;
@@ -125,10 +154,24 @@ fireElement.addEventListener("click", function () {
     // Rotate the gun by the current rotation
     gunElement.style.transform = "rotate(" + currentRotation + "deg)";
 
+    // Create an audio element and set the source to the sound file
+    const shotElement = document.createElement("audio");
+    shotElement.src = "./sound/Shot.mp3";
+
+    // Play the sound effect
+    shotElement.play();
+
     // Check if the player won the game
     if (remainingChambers === 1) {
       // Calculate the profit
       const profit = currentBet - originalBet;
+
+      // Create an audio element and set the source to the sound file
+      const winElement = document.createElement("audio");
+      winElement.src = "./sound/win.mp3";
+
+      // Play the sound effect
+      winElement.play();
 
       alert("You won Russian Roulette! You won: $" + profit);
 
@@ -142,6 +185,7 @@ fireElement.addEventListener("click", function () {
       remainingChambers = 6;
       chambersElement.innerHTML = 6;
       bettingSectionElement.style.display = "flex";
+      bigElement.style.display = "none";
     }
   }
 
