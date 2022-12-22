@@ -117,6 +117,11 @@ fireElement.addEventListener("click", function () {
     // Play the sound effect
     loseSound.play();
 
+    // After the audio has finished playing, force it to load again
+    loseSound.addEventListener("ended", () => {
+      loseSound.load();
+    });
+
     // Create the flash element and add it to the page
     const flashElement = document.createElement("div");
     flashElement.style.position = "absolute";
@@ -157,7 +162,7 @@ fireElement.addEventListener("click", function () {
 
     // Update the current bet element
     currentBetElement.innerHTML = currentBet;
-    
+
     // Calculate the profit
     const profit = currentBet - originalBet;
 
@@ -166,6 +171,11 @@ fireElement.addEventListener("click", function () {
 
     // Play the sound effect
     winSound.play();
+
+    // After the audio has finished playing, force it to load again
+    winSound.addEventListener("ended", () => {
+      winSound.load();
+    });
 
     alert("You won Russian Roulette! You won: $" + profit);
 
@@ -205,7 +215,12 @@ fireElement.addEventListener("click", function () {
     // Play the sound effect
     fireSound.play();
 
-  }
+    // After the audio has finished playing, force it to load again
+    fireSound.addEventListener("ended", () => {
+      fireSound.load();
+    });
+
+    }
 });
 
 profitElement.addEventListener("click", function () {
@@ -221,6 +236,11 @@ profitElement.addEventListener("click", function () {
 
   // Play the sound effect
   winSound.play();
+
+  // After the audio has finished playing, force it to load again
+  winSound.addEventListener("ended", () => {
+    winSound.load();
+  });
 
   // Alert the player to the profit they made
   alert("You won: $" + profit);
