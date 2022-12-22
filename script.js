@@ -45,6 +45,47 @@ enterBetElement.addEventListener("focus", function () {
   }
 });
 
+// Create an audio element and set the source to the sound file
+const loadSound = document.getElementById("load-sound");
+// Create an audio element and set the source to the sound file
+const fireSound = document.getElementById("fire-sound");
+
+function loadBet(loadSound) {
+  // Stop the audio if it is currently playing
+  loadSound.pause();
+  // Reset the current time of the audio to the beginning
+  loadSound.currentTime = 0;
+  // Load the audio file into memory
+  loadSound.load();
+}
+
+function loadFire(fireSound) {
+  // Stop the audio if it is currently playing
+  fireSound.pause();
+  // Reset the current time of the audio to the beginning
+  fireSound.currentTime = 0;
+  // Load the audio file into memory
+  fireSound.load();
+}
+
+// function preloadAudio(audioElement) {
+//   // Stop the audio if it is currently playing
+//   audioElement.pause();
+//   // Reset the current time of the audio to the beginning
+//   audioElement.currentTime = 0;
+//   // Load the audio file into memory
+//   audioElement.load();
+// }
+
+// function preloadAudio(audioElement) {
+//   // Stop the audio if it is currently playing
+//   audioElement.pause();
+//   // Reset the current time of the audio to the beginning
+//   audioElement.currentTime = 0;
+// //   // Load the audio file into memory
+// //   audioElement.load();
+// }
+
 
 placeBetElement.addEventListener("click", function () {
   // Get the bet amount from the input field
@@ -85,8 +126,7 @@ placeBetElement.addEventListener("click", function () {
   // Rotate the gun by the current rotation
   gunElement.style.transform = "rotate(" + currentRotation + "deg)";
 
-  // Create an audio element and set the source to the sound file
-  const loadSound = document.getElementById("load-sound");
+  loadBet(loadSound);
 
   // Play the sound effect
   loadSound.play();
@@ -114,13 +154,11 @@ fireElement.addEventListener("click", function () {
     // Create an audio element and set the source to the sound file
     const loseSound = document.getElementById("lose-sound");
 
+    // Reset the audio file to the start
+    loseSound.currentTime = 0;
+
     // Play the sound effect
     loseSound.play();
-
-    // After the audio has finished playing, force it to load again
-    loseSound.addEventListener("ended", () => {
-      loseSound.load();
-    });
 
     // Create the flash element and add it to the page
     const flashElement = document.createElement("div");
@@ -169,13 +207,11 @@ fireElement.addEventListener("click", function () {
     // Create an audio element and set the source to the sound file
     const winSound = document.getElementById("win-sound");
 
+    // Reset the audio file to the start
+    winSound.currentTime = 0;
+
     // Play the sound effect
     winSound.play();
-
-    // After the audio has finished playing, force it to load again
-    winSound.addEventListener("ended", () => {
-      winSound.load();
-    });
 
     alert("You won Russian Roulette! You won: $" + profit);
 
@@ -206,21 +242,12 @@ fireElement.addEventListener("click", function () {
     // Rotate the gun by the current rotation
     gunElement.style.transform = "rotate(" + currentRotation + "deg)";
 
-    // Create an audio element and set the source to the sound file
-    const fireSound = document.getElementById("fire-sound");
-
-    // Reset the audio file to the start
-    fireSound.currentTime = 0;
+    loadFire(fireSound);
 
     // Play the sound effect
     fireSound.play();
 
-    // After the audio has finished playing, force it to load again
-    fireSound.addEventListener("ended", () => {
-      fireSound.load();
-    });
-
-    }
+  }
 });
 
 profitElement.addEventListener("click", function () {
@@ -234,13 +261,11 @@ profitElement.addEventListener("click", function () {
   // Create an audio element and set the source to the sound file
   const winSound = document.getElementById("win-sound");
 
+  // Reset the audio file to the start
+  winSound.currentTime = 0;
+
   // Play the sound effect
   winSound.play();
-
-  // After the audio has finished playing, force it to load again
-  winSound.addEventListener("ended", () => {
-    winSound.load();
-  });
 
   // Alert the player to the profit they made
   alert("You won: $" + profit);
