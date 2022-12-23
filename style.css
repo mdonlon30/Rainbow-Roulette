@@ -204,6 +204,10 @@ input {
         width: 40vw;
     }
 
+    body {
+        background-size: contain;
+    }
+
     .buttons {
         padding-right: 5vw;
         padding-left: 5vw;

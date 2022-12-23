@@ -100,14 +100,6 @@ fireElement.addEventListener("click", function () {
   // Update the chambers element
   chambersElement.innerHTML = remainingChambers;
 
-  // Add the flip class to the element
-  chambersElement.classList.add("flip");
-
-  // Remove the flip class after the animation is finished
-  setTimeout(() => {
-    chambersElement.classList.remove("flip");
-  }, 500); // 500ms is the duration of the flip animation
-
   // Check if the player survived this shot
   if (remainingChambers === bulletChamber) {
 
@@ -166,6 +158,14 @@ fireElement.addEventListener("click", function () {
     // Play the sound effect
     winSound.play();
 
+    // Add the flip class to the element
+    chambersElement.classList.add("flip");
+
+    // Remove the flip class after the animation is finished
+    setTimeout(() => {
+      chambersElement.classList.remove("flip");
+    }, 500); // 500ms is the duration of the flip animation
+
     alert("You won Russian Roulette! You won: $" + profit);
 
     // Add the winnings to the available funds and update the funds element
@@ -203,6 +203,14 @@ fireElement.addEventListener("click", function () {
 
     // Play the sound effect
     fireSound.play();
+
+    // Add the flip class to the element
+    chambersElement.classList.add("flip");
+
+    // Remove the flip class after the animation is finished
+    setTimeout(() => {
+      chambersElement.classList.remove("flip");
+    }, 500); // 500ms is the duration of the flip animation
 
   }
 });
