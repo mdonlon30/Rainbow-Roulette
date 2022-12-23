@@ -85,11 +85,13 @@ placeBetElement.addEventListener("click", function () {
   // Rotate the gun by the current rotation
   gunElement.style.transform = "rotate(" + currentRotation + "deg)";
 
-  // Create an audio element and set the source to the sound file
-  const loadSound = document.getElementById("load-sound");
+  const betAudio = new Audio("./sound/gunload.mp3");
 
-  // Play the sound effect
-  loadSound.play();
+  // Preload the audio file
+  betAudio.load();
+
+  // Play the audio file
+  betAudio.play();
 });
 
 
@@ -103,11 +105,13 @@ fireElement.addEventListener("click", function () {
   // Check if the player survived this shot
   if (remainingChambers === bulletChamber) {
 
-    // Create an audio element and set the source to the sound file
-    const loseSound = document.getElementById("lose-sound");
+    const loseAudio = new Audio("./sound/lose.mp3");
 
-    // Play the sound effect
-    loseSound.play();
+    // Preload the audio file
+    loseAudio.load();
+
+    // Play the audio file
+    loseAudio.play();
 
     // Create the flash element and add it to the page
     const flashElement = document.createElement("div");
@@ -152,11 +156,13 @@ fireElement.addEventListener("click", function () {
     // Calculate the profit
     const profit = currentBet - originalBet;
 
-    // Create an audio element and set the source to the sound file
-    const winSound = document.getElementById("win-sound");
+    const winAudio = new Audio("./sound/win.mp3");
 
-    // Play the sound effect
-    winSound.play();
+    // Preload the audio file
+    winAudio.load();
+
+    // Play the audio file
+    winAudio.play();
 
     // Add the flip class to the element
     chambersElement.classList.add("flip");
@@ -195,14 +201,13 @@ fireElement.addEventListener("click", function () {
     // Rotate the gun by the current rotation
     gunElement.style.transform = "rotate(" + currentRotation + "deg)";
 
-    // Create an audio element and set the source to the sound file
-    const fireSound = document.getElementById("fire-sound");
+    const fireAudio = new Audio("./sound/fire.mp3");
 
-    // Reset the audio file to the start
-    fireSound.currentTime = 0;
+    // Preload the audio file
+    fireAudio.load();
 
-    // Play the sound effect
-    fireSound.play();
+    // Play the audio file
+    fireAudio.play();
 
     // Add the flip class to the element
     chambersElement.classList.add("flip");
@@ -216,6 +221,14 @@ fireElement.addEventListener("click", function () {
 });
 
 profitElement.addEventListener("click", function () {
+  const winAudio = new Audio("./sound/win.mp3");
+
+  // Preload the audio file
+  winAudio.load();
+
+  // Play the audio file
+  winAudio.play();
+
   // Add the current bet to the available funds and update the funds element
   funds += currentBet;
   fundsElement.innerHTML = funds;
@@ -223,16 +236,8 @@ profitElement.addEventListener("click", function () {
   // Calculate the profit
   const profit = currentBet - originalBet;
 
-  // Create an audio element and set the source to the sound file
-  const winSound = document.getElementById("win-sound");
-
-  // Play the sound effect
-  winSound.play();
-
   // Alert the player to the profit they made
   alert("You won: $" + profit);
-
-
 
   // Reset the game state
   currentBet = 0;
