@@ -36,6 +36,29 @@ bigElement.style.display = "none";
 
 
 
+let intervalId;
+const animationDuration = 1000; // duration of animation in milliseconds
+const incrementInterval = 50; // time between each increment in milliseconds
+
+function updateFunds() {
+  clearInterval(intervalId);
+  const startFunds = funds;
+  const targetFunds = funds + currentBet;
+  const increment = (targetFunds - startFunds) / (animationDuration / incrementInterval);
+  let timeElapsed = 0;
+  intervalId = setInterval(function () {
+    funds += increment;
+    timeElapsed += incrementInterval;
+    if (timeElapsed >= animationDuration) {
+      funds = targetFunds;
+      clearInterval(intervalId);
+    }
+    fundsElement.innerHTML = Math.round(funds); // display funds value as whole numbers
+  }, incrementInterval);
+}
+
+
+
 // Add an event listener to the enter bet element
 enterBetElement.addEventListener("focus", function () {
   // Check if the value is "Enter Bet..."
@@ -51,7 +74,7 @@ placeBetElement.addEventListener("click", function () {
   const bet = parseInt(enterBetElement.value, 10);
 
   // Make sure the bet is valid (not more than the available funds and not negative)
-  if (bet > funds || bet < 0 || isNaN(bet)) {
+  if (bet > funds || bet <= 0 || isNaN(bet)) {
     alert("Invalid bet amount.");
     return;
   }
@@ -102,8 +125,55 @@ fireElement.addEventListener("click", function () {
   // Update the chambers element
   chambersElement.innerHTML = remainingChambers;
 
-  // Check if the player survived this shot
-  if (remainingChambers === bulletChamber) {
+  if (funds === 0 && remainingChambers === bulletChamber) {
+    const loseAudio = new Audio("./sound/lose.mp3");
+
+    // Preload the audio file
+    loseAudio.load();
+
+    // Play the audio file
+    loseAudio.play();
+
+    // Create the flash element and add it to the page
+    const flashElement = document.createElement("div");
+    flashElement.style.position = "absolute";
+    flashElement.style.top = 0;
+    flashElement.style.left = 0;
+    flashElement.style.width = "100%";
+    flashElement.style.height = "100%";
+    flashElement.style.backgroundColor = "white";
+    flashElement.style.zIndex = 10;
+    document.body.appendChild(flashElement);
+
+    // Apply the fade-in class to the flash element
+    flashElement.classList.add("fade-in");
+
+    // Wait for the fade-in animation to finish before showing the alert
+    setTimeout(() => {
+      alert("You have ran out of money. Play Again.");
+    }, 1000); // 1000ms is the duration of the fade-in animation
+
+    // Remove the flash element from the page after the alert is shown
+    setTimeout(() => {
+      document.body.removeChild(flashElement);
+    }, 2000); // 2000ms is the duration of the fade-in animation plus the time it takes for the alert to be shown
+
+    // Set the initial values
+    fundsElement.innerHTML = 100;
+    currentBetElement.innerHTML = 0;
+    chambersElement.innerHTML = 6;
+
+    // Initialize variables to keep track of game state
+    bulletChamber = 0;
+    remainingChambers = 6;
+    currentBet = 0;
+    funds = 100;
+    originalBet = 0;
+
+    bettingSectionElement.style.display = "flex";
+    bigElement.style.display = "none";
+
+  } else if (remainingChambers === bulletChamber) {
 
     const loseAudio = new Audio("./sound/lose.mp3");
 
@@ -127,8 +197,6 @@ fireElement.addEventListener("click", function () {
     // Apply the fade-in class to the flash element
     flashElement.classList.add("fade-in");
 
-
-
     // Wait for the fade-in animation to finish before showing the alert
     setTimeout(() => {
       alert("You were shot! Try Again.");
@@ -146,6 +214,7 @@ fireElement.addEventListener("click", function () {
     chambersElement.innerHTML = 6;
     bettingSectionElement.style.display = "flex";
     bigElement.style.display = "none";
+
   } else if (remainingChambers === 1) {  // Check if the player won the game
 
     // Increase the current bet by the corresponding percentage
@@ -174,9 +243,11 @@ fireElement.addEventListener("click", function () {
 
     alert("You won Russian Roulette! You won: $" + profit);
 
-    // Add the winnings to the available funds and update the funds element
-    funds += currentBet;
-    fundsElement.innerHTML = funds;
+    // // Add the winnings to the available funds and update the funds element
+    // funds += currentBet;
+    // fundsElement.innerHTML = funds;
+
+    updateFunds()
 
     // Reset the game state
     currentBet = 0;
@@ -186,6 +257,7 @@ fireElement.addEventListener("click", function () {
     bettingSectionElement.style.display = "flex";
     bigElement.style.display = "none";
   } else {
+
     // Increase the current bet by the corresponding percentage
     currentBet *= winnings[winnings.length - remainingChambers - 1];
 
@@ -220,6 +292,8 @@ fireElement.addEventListener("click", function () {
   }
 });
 
+
+
 profitElement.addEventListener("click", function () {
   const winAudio = new Audio("./sound/win.mp3");
 
@@ -229,9 +303,13 @@ profitElement.addEventListener("click", function () {
   // Play the audio file
   winAudio.play();
 
-  // Add the current bet to the available funds and update the funds element
-  funds += currentBet;
-  fundsElement.innerHTML = funds;
+  // // Add the current bet to the available funds and update the funds element
+  // funds += currentBet;
+  // fundsElement.innerHTML = funds;
+
+  updateFunds();
+
+
 
   // Calculate the profit
   const profit = currentBet - originalBet;
@@ -247,5 +325,4 @@ profitElement.addEventListener("click", function () {
   bettingSectionElement.style.display = "flex";
   bigElement.style.display = "none";
 });
-
 
