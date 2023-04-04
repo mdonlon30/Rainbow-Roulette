@@ -86,12 +86,12 @@ body {
     width: 17vw;
     height: 17vw;
     background: rgb(0, 0, 0);
-    background: radial-gradient(circle, rgb(5, 5, 5) 52%, rgb(49 56 62) 54%);
+    background: radial-gradient(circle, rgb(245, 245, 245) 52%, rgb(49, 56, 62) 54%);
     border-radius: 50%;
     border: 6px solid black;
 
 }
-
+  
 .bet {
     display: flex;
     justify-content: center;

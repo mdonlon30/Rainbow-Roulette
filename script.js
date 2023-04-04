@@ -35,6 +35,38 @@ const bigElement = document.querySelector("#big");
 bigElement.style.display = "none";
 
 
+function rainbowFlash() {
+  console.log("rainbow called");
+  // Create the flash element and add it to the page
+  const flashElement = document.createElement("div");
+  flashElement.style.position = "absolute";
+  flashElement.style.top = 0;
+  flashElement.style.left = 0;
+  flashElement.style.width = "100%";
+  flashElement.style.height = "100%";
+  flashElement.style.background = "linear-gradient(to right, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8b00ff)";
+  flashElement.style.opacity = 0;
+  flashElement.style.zIndex = 10;
+  document.body.appendChild(flashElement);
+
+  // Add a transition to the opacity property of the flash element
+  flashElement.style.transition = "opacity 1s ease-in-out";
+
+  // Set the opacity of the flash element to 0.7 after a short delay
+  setTimeout(function () {
+    flashElement.style.opacity = 0.9;
+  }, 0);
+
+  // Set the opacity of the flash element back to 0 after another short delay
+  setTimeout(function () {
+    flashElement.style.opacity = 0;
+  }, 1000);
+
+  // Remove the flash element from the DOM after the transition has completed
+  setTimeout(function () {
+    document.body.removeChild(flashElement);
+  }, 2000);
+}
 
 let intervalId;
 const animationDuration = 1000; // duration of animation in milliseconds
@@ -56,8 +88,6 @@ function updateFunds() {
     fundsElement.innerHTML = Math.round(funds); // display funds value as whole numbers
   }, incrementInterval);
 }
-
-
 
 // Add an event listener to the enter bet element
 enterBetElement.addEventListener("focus", function () {
@@ -99,8 +129,13 @@ placeBetElement.addEventListener("click", function () {
   // Determine the chamber with the bullet
   bulletChamber = Math.floor(Math.random() * 6) + 1;
 
+  const numbers = [720, 780, 660, 840];
+  const randomIndex = Math.floor(Math.random() * numbers.length);
+  const randomNumber = numbers[randomIndex];
+
+  
   // Add 720 degrees to the current rotation of the gun
-  currentRotation += 720;
+  currentRotation += randomNumber;
 
   // Set the transition duration and timing function for the place-bet button
   gunElement.style.transition = "transform 1s ease-out";
@@ -126,6 +161,7 @@ fireElement.addEventListener("click", function () {
   chambersElement.innerHTML = remainingChambers;
 
   if (funds === 0 && remainingChambers === bulletChamber) {
+    
     const loseAudio = new Audio("./sound/lose.mp3");
 
     // Preload the audio file
@@ -134,29 +170,9 @@ fireElement.addEventListener("click", function () {
     // Play the audio file
     loseAudio.play();
 
-    // Create the flash element and add it to the page
-    const flashElement = document.createElement("div");
-    flashElement.style.position = "absolute";
-    flashElement.style.top = 0;
-    flashElement.style.left = 0;
-    flashElement.style.width = "100%";
-    flashElement.style.height = "100%";
-    flashElement.style.backgroundColor = "white";
-    flashElement.style.zIndex = 10;
-    document.body.appendChild(flashElement);
+    rainbowFlash();
 
-    // Apply the fade-in class to the flash element
-    flashElement.classList.add("fade-in");
-
-    // Wait for the fade-in animation to finish before showing the alert
-    setTimeout(() => {
-      alert("You have ran out of money. Play Again.");
-    }, 1000); // 1000ms is the duration of the fade-in animation
-
-    // Remove the flash element from the page after the alert is shown
-    setTimeout(() => {
-      document.body.removeChild(flashElement);
-    }, 2000); // 2000ms is the duration of the fade-in animation plus the time it takes for the alert to be shown
+    alert("You ran out of money. Play again");
 
     // Set the initial values
     fundsElement.innerHTML = 100;
@@ -174,7 +190,7 @@ fireElement.addEventListener("click", function () {
     bigElement.style.display = "none";
 
   } else if (remainingChambers === bulletChamber) {
-
+    rainbowFlash();
     const loseAudio = new Audio("./sound/lose.mp3");
 
     // Preload the audio file
@@ -183,29 +199,7 @@ fireElement.addEventListener("click", function () {
     // Play the audio file
     loseAudio.play();
 
-    // Create the flash element and add it to the page
-    const flashElement = document.createElement("div");
-    flashElement.style.position = "absolute";
-    flashElement.style.top = 0;
-    flashElement.style.left = 0;
-    flashElement.style.width = "100%";
-    flashElement.style.height = "100%";
-    flashElement.style.backgroundColor = "white";
-    flashElement.style.zIndex = 10;
-    document.body.appendChild(flashElement);
-
-    // Apply the fade-in class to the flash element
-    flashElement.classList.add("fade-in");
-
-    // Wait for the fade-in animation to finish before showing the alert
-    setTimeout(() => {
-      alert("You were shot! Try Again.");
-    }, 1000); // 1000ms is the duration of the fade-in animation
-
-    // Remove the flash element from the page after the alert is shown
-    setTimeout(() => {
-      document.body.removeChild(flashElement);
-    }, 2000); // 2000ms is the duration of the fade-in animation plus the time it takes for the alert to be shown
+    alert("You lost the round. Keep Trying!");
 
     // Reset the game state
     currentBet = 0;
@@ -241,13 +235,13 @@ fireElement.addEventListener("click", function () {
       chambersElement.classList.remove("flip");
     }, 500); // 500ms is the duration of the flip animation
 
-    alert("You won Russian Roulette! You won: $" + profit);
+    alert("You won Rainbow Roulette! You won: $" + profit);
 
     // // Add the winnings to the available funds and update the funds element
     // funds += currentBet;
     // fundsElement.innerHTML = funds;
 
-    updateFunds()
+    updateFunds();
 
     // Reset the game state
     currentBet = 0;
@@ -288,6 +282,7 @@ fireElement.addEventListener("click", function () {
     setTimeout(() => {
       chambersElement.classList.remove("flip");
     }, 500); // 500ms is the duration of the flip animation
+    
 
   }
 });
@@ -309,8 +304,6 @@ profitElement.addEventListener("click", function () {
 
   updateFunds();
 
-
-
   // Calculate the profit
   const profit = currentBet - originalBet;
 
@@ -325,4 +318,6 @@ profitElement.addEventListener("click", function () {
   bettingSectionElement.style.display = "flex";
   bigElement.style.display = "none";
 });
+
+
 
