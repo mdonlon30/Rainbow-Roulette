@@ -128,6 +128,9 @@ placeBetElement.addEventListener("click", function () {
     return;
   }
 
+  // Scroll to the top of the page
+  window.scrollTo(0, 0);
+
   // Store the original bet
   originalBet = bet;
 
