@@ -68,6 +68,20 @@ function rainbowFlash() {
   }, 2000);
 }
 
+function lose() {
+  
+  const loseAudio = new Audio("./sound/lose.mp3");
+
+    // Preload the audio file
+    loseAudio.load();
+
+    // Play the audio file
+    loseAudio.play();
+
+    rainbowFlash();
+
+}
+
 let intervalId;
 const animationDuration = 1000; // duration of animation in milliseconds
 const incrementInterval = 50; // time between each increment in milliseconds
@@ -162,17 +176,12 @@ fireElement.addEventListener("click", function () {
 
   if (funds === 0 && remainingChambers === bulletChamber) {
     
-    const loseAudio = new Audio("./sound/lose.mp3");
+    lose();
 
-    // Preload the audio file
-    loseAudio.load();
-
-    // Play the audio file
-    loseAudio.play();
-
-    rainbowFlash();
-
-    alert("You ran out of money. Play again");
+    // Wait for the fade-in animation to finish before showing the alert
+    setTimeout(() => {
+      alert("You have ran out of money. Play Again.");
+    }, 2000); // 1000ms is the duration of the fade-in animation
 
     // Set the initial values
     fundsElement.innerHTML = 100;
@@ -190,16 +199,12 @@ fireElement.addEventListener("click", function () {
     bigElement.style.display = "none";
 
   } else if (remainingChambers === bulletChamber) {
-    rainbowFlash();
-    const loseAudio = new Audio("./sound/lose.mp3");
+    lose();
 
-    // Preload the audio file
-    loseAudio.load();
-
-    // Play the audio file
-    loseAudio.play();
-
-    alert("You lost the round. Keep Trying!");
+    // Wait for the fade-in animation to finish before showing the alert
+    setTimeout(() => {
+      alert("You lost the round. Try Again.");
+    }, 2000); // 1000ms is the duration of the fade-in animation
 
     // Reset the game state
     currentBet = 0;
