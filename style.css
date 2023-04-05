@@ -5,6 +5,7 @@ body {
     background-repeat: no-repeat;
     margin: 0 auto;
     font-family: 'DynaPuff', cursive;
+    overflow: hidden;
 }
 
 
@@ -68,6 +69,7 @@ body {
 
 .amounts {
     margin: 0;
+    font-size: 15px;
 }
 
 .image {
