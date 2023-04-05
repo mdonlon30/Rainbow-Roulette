@@ -89,9 +89,16 @@ body {
 .arrow {
     background: white;
     background-image: url("./images/pin2.JPG");
-    background-position: top center;
     border-radius: 50%;
     border: 6px solid red;
+    padding: 5px;
+    background-position: top
+}
+
+@media screen and (max-height: 420px) {
+    .arrow {
+        padding: 0px;
+    }
 }
 
 #gun {
