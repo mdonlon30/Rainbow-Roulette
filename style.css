@@ -75,7 +75,7 @@ body {
     align-items: center;
     background-image: url("./images/question2.jpeg");
     background-size: cover;
-    border: 4px solid rgb(0, 0, 0);
+    border: 4px solid red;
     background-color: rgb(0, 0, 0);
     width: 20vw;
     height: 20vw;
@@ -83,14 +83,17 @@ body {
     border-radius: 25px;
 }
 
-.wheel {
+.arrow {
+    background: white;
+    background-image: url("./images/pin2.JPG");
+    background-position: top center;
+    border-radius: 50%;
+    border: 6px solid red;
+}
+
+#gun {
     width: 17vw;
     height: 17vw;
-    background: rgb(0, 0, 0);
-    background: radial-gradient(circle, rgb(245, 245, 245) 52%, rgb(49, 56, 62) 54%);
-    border-radius: 50%;
-    border: 6px solid black;
-
 }
   
 .bet {
@@ -120,7 +123,7 @@ input {
     font-size: 15px;
     font-weight: 700;
     background-color: rgb(48, 44, 44);
-    color: red;
+    color: aqua;
     border: 1px solid red;
 }
 
@@ -189,16 +192,10 @@ input {
         height: 60vw;
     }
 
-    .wheel {
-        width: 50vw;
-        height: 50vw;
-    }
+    
 }
 
 @media screen and (max-width: 600px) {
-    img {
-        width: 70vw;
-    }
 
     .big {
         width: 40vw;
@@ -214,18 +211,18 @@ input {
         padding-left: 5vw;
     }
 
-    .image {
-        width: 70vw;
-        height: 70vw;
-    }
-
-    .wheel {
+    #gun {
         width: 55vw;
         height: 55vw;
     }
 
     .extra-space {
         height: 200px;
+    }
+
+    .image {
+        height: 270px;
+        width: 270px;
     }
 }
 
@@ -238,20 +235,6 @@ input {
         width: 60vw;
     }
 
-    .image {
-        width: 30vw;
-        height: 30vw;
-    }
-
-    .wheel {
-        width: 30vw;
-        height: 30vw;
-    }
-
-    
-}
-
-@media screen and (max-height: 420px) {
     .money-section {
         display: block;
     }
@@ -265,11 +248,6 @@ input {
 
     .title-container {
         display: none;
-    }
-
-    .image img {
-        height: 150px;
-        width: 150px;
     }
 
     .image {

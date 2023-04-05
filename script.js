@@ -36,7 +36,7 @@ bigElement.style.display = "none";
 
 // Wait for the fade-in animation to finish before showing the alert
 setTimeout(() => {
-  alert("Welcome to Rainbow Roulette. The game starts with 100 dollars, which allows you to place a bet. Every round, one of the six colors on the color wheel will be randomly chosen to make you lose. Every time you spin in a round will increase your winnings and also your chances of losing on the next spin, so don't be afraid to take profit. Good luck!");
+  alert("Welcome to Rainbow Roulette. The game starts with 100 dollars, which allows you to place a bet. Every round, one of the six colors on the color wheel will be randomly chosen to make you lose. In each round, every spin will increase your winnings but also your chances of losing on the next spin, so don't be afraid to take profit. The goal is to make as much money as possible. Good luck!");
 }, 1000); // 1000ms is the duration of the fade-in animation
 
 
@@ -185,7 +185,7 @@ fireElement.addEventListener("click", function () {
 
     // Wait for the fade-in animation to finish before showing the alert
     setTimeout(() => {
-      alert("You have ran out of money. Play Again.");
+      alert("You have run out of money. Play Again.");
     }, 2000); // 1000ms is the duration of the fade-in animation
 
     // Set the initial values
@@ -345,6 +345,23 @@ for (let i = 0; i < stylesheets.length; i++) {
     // If the rule contains the word "aqua", replace it with "red"
     if (rule.cssText.includes("aqua")) {
       const newRule = rule.cssText.replace(/aqua/g, "yellow");
+      stylesheets[i].deleteRule(j);
+      stylesheets[i].insertRule(newRule, j);
+    }
+  }
+}
+
+// Loop through each stylesheet
+for (let i = 0; i < stylesheets.length; i++) {
+  const rules = stylesheets[i].cssRules;
+
+  // Loop through each rule in the stylesheet
+  for (let j = 0; j < rules.length; j++) {
+    const rule = rules[j];
+
+    // If the rule contains the word "aqua", replace it with "red"
+    if (rule.cssText.includes("red")) {
+      const newRule = rule.cssText.replace(/red/g, "purple");
       stylesheets[i].deleteRule(j);
       stylesheets[i].insertRule(newRule, j);
     }
