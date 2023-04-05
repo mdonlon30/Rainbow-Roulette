@@ -1,5 +1,6 @@
 body {
-    background-image: url(./images/background.jpg);
+    background-image: url(./images/newbackground.jpg);
+    background-repeat: no-repeat;
     margin: 0 auto;
 }
 
@@ -183,7 +184,6 @@ input {
         padding-left: 10vw;
     }
 
-
     .image {
         width: 60vw;
         height: 60vw;
@@ -205,7 +205,8 @@ input {
     }
 
     body {
-        background-size: contain;
+        background-size: cover;
+        background-repeat: no-repeat;
     }
 
     .buttons {
@@ -221,6 +222,10 @@ input {
     .wheel {
         width: 55vw;
         height: 55vw;
+    }
+
+    .extra-space {
+        height: 200px;
     }
 }
 
@@ -241,5 +246,39 @@ input {
     .wheel {
         width: 30vw;
         height: 30vw;
+    }
+
+    
+}
+
+@media screen and (max-height: 420px) {
+    .money-section {
+        display: block;
+    }
+
+    .landscape-adjust {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        margin-top: 15px;
+    }
+
+    .title-container {
+        display: none;
+    }
+
+    .image img {
+        height: 150px;
+        width: 150px;
+    }
+
+    .image {
+        width: 180px;
+        height: 180px;
+        margin: 0;
+    }
+
+    .money-container {
+        height: 90px;
     }
 }

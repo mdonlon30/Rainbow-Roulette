@@ -34,6 +34,11 @@ const bigElement = document.querySelector("#big");
 // Hide the big element by default
 bigElement.style.display = "none";
 
+// Wait for the fade-in animation to finish before showing the alert
+setTimeout(() => {
+  alert("Welcome to Rainbow Roulette. The game starts with 100 dollars, which allows you to place a bet. Every round, one of the six colors on the color wheel will be randomly chosen to make you lose. Every time you spin in a round will increase your winnings and also your chances of losing on the next spin, so don't be afraid to take profit. Good luck!");
+}, 1000); // 1000ms is the duration of the fade-in animation
+
 
 function rainbowFlash() {
   console.log("rainbow called");
@@ -326,3 +331,22 @@ profitElement.addEventListener("click", function () {
 
 
 
+// Get all the stylesheets on the page
+const stylesheets = document.styleSheets;
+
+// Loop through each stylesheet
+for (let i = 0; i < stylesheets.length; i++) {
+  const rules = stylesheets[i].cssRules;
+
+  // Loop through each rule in the stylesheet
+  for (let j = 0; j < rules.length; j++) {
+    const rule = rules[j];
+
+    // If the rule contains the word "aqua", replace it with "red"
+    if (rule.cssText.includes("aqua")) {
+      const newRule = rule.cssText.replace(/aqua/g, "yellow");
+      stylesheets[i].deleteRule(j);
+      stylesheets[i].insertRule(newRule, j);
+    }
+  }
+}
