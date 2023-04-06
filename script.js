@@ -370,3 +370,18 @@ for (let i = 0; i < stylesheets.length; i++) {
     }
   }
 }
+
+// Get all elements on the page
+const elements = document.getElementsByTagName("*");
+
+// Loop through each element
+for (let i = 0; i < elements.length; i++) {
+  // Get the background color of the element
+  const bgColor = window.getComputedStyle(elements[i]).backgroundColor;
+
+  // Check if the background color is valid and exclude element with id="enter-bet"
+  if (bgColor !== "rgba(0, 0, 0, 0)" && bgColor !== "transparent" && elements[i].id !== "enter-bet") {
+    // Set the opacity to 0.5
+    elements[i].style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+  }
+}
